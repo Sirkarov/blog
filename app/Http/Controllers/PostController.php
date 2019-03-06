@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\Post;
+use Session;
 
 class PostController extends Controller
 {
@@ -36,10 +37,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,array(
+        $validator = Validator::make($request->all(),array(
             'title' => 'required|max:255',
             'body'  => 'required'
         ));
+
+        if ($validator->fails()) {
+            return redirect()->route('posts.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $post = new Post;
 
@@ -47,6 +54,8 @@ class PostController extends Controller
         $post->body = $request->body;
 
         $post->save();
+
+        Session::flash('success','Post was created successfully');
 
         return redirect()->route('posts.show',$post->id);
     }
@@ -59,7 +68,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('posts.show');
     }
 
     /**
@@ -70,7 +79,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
