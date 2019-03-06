@@ -18,7 +18,7 @@
                         <label for="body">Body</label>
                         <textarea type="text" class="form-control" name="body" id="PostBody" placeholder="Enter body for the Post" rows="5"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Submit Post</button>
+                    <button type="submit" class="btn btn-success btn-block">Submit Post</button>
                 </form>
             </div>
         </div>
