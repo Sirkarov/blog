@@ -20,8 +20,12 @@
     		</div>
     		<hr>
     			<div class="row">
-    			<div class="col-sm-6"><a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary btn-block btn-sm">Edit</a></div>
-    			<div class="col-sm-6"><a href="{{ route('posts.destroy',$post->id) }}" class="btn btn-danger btn-block btn-sm">Delete</a></div>
+    			<div class="col-md-6"><a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary btn-block btn-sm">Edit</a></div>
+					<div class="col-md-6"><form role="form" method="POST" action="{{route('posts.destroy', $post->id)}}">
+						@csrf
+						<input type="hidden" name="_method" value="DELETE">
+						<button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
+						</form></div>
     		</div>
     	</div>
     </div>

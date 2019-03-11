@@ -13,4 +13,18 @@
 Route::get('/','PagesController@getIndex');
 Route::get('/about','PagesController@getAbout');
 Route::get('/contact','PagesController@getContact');
-Route::resource('posts','PostController');
+
+
+/*    Start of POSTS Routes       */
+
+Route::group(['prefix'=>'posts','as'=>'posts.'],function(){
+    Route::get('/','PostController@index')->name('index');
+    Route::get('create','PostController@create')->name('create');
+    Route::post('update/{id}','PostController@update')->name('update');
+    Route::post('store','PostController@store')->name('store');
+    Route::get('edit/{id}','PostController@edit')->name('edit');
+    Route::get('show/{id}','PostController@show')->name('show');
+    Route::delete('destroy/{id}','PostController@destroy')->name('destroy');
+});
+
+/*    END of POSTS Routes       */
