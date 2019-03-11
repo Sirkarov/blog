@@ -15,13 +15,17 @@
     			<div class="col-md-6"><dd>{{date('M j, Y h:ia',strtotime($post->created_at))}}</dd></div>
     		</div>
     		<div class="row">
-    			<div class="col-md-6"><dt>Created At:</dt></div>
+    			<div class="col-md-6"><dt>Updated At:</dt></div>
     			<div class="col-md-6"><dd>{{date('M j, Y h:ia',strtotime($post->updated_at))}}</dd></div>
     		</div>
     		<hr>
     			<div class="row">
-    			<div class="col-sm-6"><a href="posts.edit" class="btn btn-primary btn-block btn-sm">Edit</a></div>
-    			<div class="col-sm-6"><a href="posts.destroy" class="btn btn-danger btn-block btn-sm">Delete</a></div>
+    			<div class="col-md-6"><a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary btn-block btn-sm">Edit</a></div>
+					<div class="col-md-6"><form role="form" method="POST" action="{{route('posts.destroy', $post->id)}}">
+						@csrf
+						<input type="hidden" name="_method" value="DELETE">
+						<button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
+						</form></div>
     		</div>
     	</div>
     </div>
