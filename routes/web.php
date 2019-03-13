@@ -16,15 +16,5 @@ Route::get('/contact','PagesController@getContact');
 
 
 /*    Start of POSTS Routes       */
-
-Route::group(['prefix'=>'posts','as'=>'posts.'],function(){
-    Route::get('/','PostController@index')->name('index');
-    Route::get('create','PostController@create')->name('create');
-    Route::post('update/{id}','PostController@update')->name('update');
-    Route::post('store','PostController@store')->name('store');
-    Route::get('edit/{id}','PostController@edit')->name('edit');
-    Route::get('show/{id}','PostController@show')->name('show');
-    Route::delete('destroy/{id}','PostController@destroy')->name('destroy');
-});
-
+Route::resource('posts','PostController');
 /*    END of POSTS Routes       */
