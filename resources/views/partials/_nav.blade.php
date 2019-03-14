@@ -16,6 +16,9 @@
             <li class="nav-item {{ Request::is('contact') ? "active" : "" }}">
                 <a class="nav-link" href="/contact">Contact</a>
             </li>
+            <li class="nav-item {{ Request::is('posts') ? "active" : "" }}">
+                <a class="nav-link" href="{{route('posts.index')}}">Posts</a>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
