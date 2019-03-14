@@ -5,8 +5,9 @@
 
 @section('content')
 
-    <form role="form" method="post" action="{{route('posts.update',$post->id)}}">
+    <form role="form" method="POST" action="{{route('posts.update',$post->id)}}">
         @csrf
+        <input type="hidden" name="_method" value="put" />
         <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
