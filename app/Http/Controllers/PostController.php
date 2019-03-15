@@ -25,6 +25,7 @@ class PostController extends Controller
     {
         $validator = Validator::make($request->all(),array(
             'title' => 'required|max:255',
+            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body'  => 'required'
         ));
 
@@ -38,6 +39,7 @@ class PostController extends Controller
 
         $post->title = $request->title;
         $post->body = $request->body;
+        $post->slug = $request->slug;
 
         $post->save();
 
@@ -66,6 +68,7 @@ class PostController extends Controller
 
         $validator = Validator::make($request->all(),array(
             'title' => 'required|max:255',
+            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body'  => 'required'
         ));
 
@@ -77,6 +80,7 @@ class PostController extends Controller
 
         $post->title = $request->title;
         $post->body = $request->body;
+        $post->slug = $request->slug;
 
         $post->save();
 
