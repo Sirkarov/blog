@@ -5,13 +5,18 @@
 
 @section('content')
 
-    <form role="form" method="post" action="{{route('posts.update',$post->id)}}">
+    <form role="form" method="POST" action="{{route('posts.update',$post->id)}}">
         @csrf
+        <input type="hidden" name="_method" value="put" />
         <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="PostTitle">Title</label>
-                        <input type="text" class="form-control" value="{{$post->title}}" name="title" id="PostTitle" aria-describedby="emailHelp" placeholder="Enter title">
+                        <input type="text" class="form-control" value="{{$post->title}}" name="title" id="PostTitle" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="PostSlug">Slug</label>
+                        <input type="text" class="form-control" value="{{$post->slug}}" name="slug" id="PostSlug" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
                         <label for="PostBody">Body</label>
