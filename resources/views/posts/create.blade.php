@@ -15,6 +15,10 @@
                         <input type="text" class="form-control" name="title" id="PostTitle" aria-describedby="emailHelp" placeholder="Enter title">
                     </div>
                     <div class="form-group">
+                        <label for="slug">Url</label>
+                        <input type="text" class="form-control" name="slug" id="PostSlug" aria-describedby="emailHelp" placeholder="Enter slug">
+                    </div>
+                    <div class="form-group">
                         <label for="body">Body</label>
                         <textarea type="text" class="form-control" name="body" id="PostBody" placeholder="Enter body for the Post" rows="5"></textarea>
                     </div>
