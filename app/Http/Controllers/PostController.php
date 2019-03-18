@@ -67,10 +67,12 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         if($post->slug == $request->slug)
-        $validator = Validator::make($request->all(),array(
-            'title' => 'required|max:255',
-            'body'  => 'required'
-        ));
+        {
+            $validator = Validator::make($request->all(),array(
+                'title' => 'required|max:255',
+                'body'  => 'required'
+            ));
+        }
         else
         {
             $validator = Validator::make($request->all(),array(

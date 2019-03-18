@@ -15,8 +15,7 @@ Route::get('blog/{slug}',['as' => 'blog.single','uses'=>'BlogController@getSingl
 Route::get('/','PagesController@getIndex');
 Route::get('/about','PagesController@getAbout');
 Route::get('/contact','PagesController@getContact');
-
-
 /*    Start of POSTS Routes       */
 Route::resource('posts','PostController');
 /*    END of POSTS Routes       */
+Route::get('blog',['uses' => 'BlogController@getIndex','as'=>'blog.index']);
