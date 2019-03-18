@@ -39,13 +39,10 @@
 				</tbody>
 			</table>
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="text-center">
+                    <div class="mx-auto">
                         {!! $posts->links(); !!}
                     </div>
-                </div>
             </div>
 		</div>
 	</div>
-
 @endsection
