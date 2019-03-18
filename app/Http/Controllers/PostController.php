@@ -66,11 +66,19 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        if($post->slug == $request->slug)
         $validator = Validator::make($request->all(),array(
             'title' => 'required|max:255',
-            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body'  => 'required'
         ));
+        else
+        {
+            $validator = Validator::make($request->all(),array(
+                'title' => 'required|max:255',
+                'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+                'body'  => 'required'
+            ));
+        }
 
         if ($validator->fails()) {
             return redirect()->route('posts.show',$post->id)
