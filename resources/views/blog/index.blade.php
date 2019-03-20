@@ -25,10 +25,8 @@
     @endforeach
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="text-center">
+            <div class="mx-auto">
                 {!! $posts->links(); !!}
             </div>
-        </div>
     </div>
 @endsection
