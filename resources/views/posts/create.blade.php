@@ -19,6 +19,15 @@
                         <input type="text" class="form-control" name="slug" id="PostSlug" aria-describedby="emailHelp" placeholder="Enter slug">
                     </div>
                     <div class="form-group">
+                        <label for="category_id">Category</label>
+                        <select name="category_id" class="form-control" id="category_id" required>
+                            <option hidden value="">Choose Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}" name="category_id">{{$category->name}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="body">Body</label>
                         <textarea type="text" class="form-control" name="body" id="PostBody" placeholder="Enter body for the Post" rows="5"></textarea>
                     </div>
@@ -26,4 +35,5 @@
                 </form>
             </div>
         </div>
+
 @endsection

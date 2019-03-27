@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Post;
@@ -24,7 +25,9 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+
+        return view('posts.create')->with('categories',$categories);
     }
 
     public function store(Request $request)
@@ -32,6 +35,7 @@ class PostController extends Controller
         $validator = Validator::make($request->all(),array(
             'title' => 'required|max:255',
             'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+            'category_id' => 'required|integer',
             'body'  => 'required'
         ));
 
@@ -44,8 +48,10 @@ class PostController extends Controller
         $post = new Post;
 
         $post->title = $request->title;
-        $post->body = $request->body;
         $post->slug = $request->slug;
+        $post->category_id = $request->category_id;
+        $post->body = $request->body;
+
 
         $post->save();
 
@@ -65,7 +71,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        return view('posts.edit')->with('post',$post);
+        $categories = Category::all();
+
+        return view('posts.edit')->with('post',$post)->with('categories',$categories);
     }
 
     public function update(Request $request, $id)
@@ -76,6 +84,7 @@ class PostController extends Controller
         {
             $validator = Validator::make($request->all(),array(
                 'title' => 'required|max:255',
+                'category_id' => 'required|integer',
                 'body'  => 'required'
             ));
         }
@@ -84,6 +93,7 @@ class PostController extends Controller
             $validator = Validator::make($request->all(),array(
                 'title' => 'required|max:255',
                 'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+                'category_id' => 'required|integer',
                 'body'  => 'required'
             ));
         }
@@ -95,8 +105,10 @@ class PostController extends Controller
         }
 
         $post->title = $request->title;
-        $post->body = $request->body;
         $post->slug = $request->slug;
+        $post->category_id = $request->category_id;
+        $post->body = $request->body;
+
 
         $post->save();
 
