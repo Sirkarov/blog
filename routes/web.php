@@ -22,3 +22,4 @@ Route::get('blog',['uses' => 'BlogController@getIndex','as'=>'blog.index']);
 
 Auth::routes();
 
+Route::resource('categories','CategoryController',['except'=>['create']]);

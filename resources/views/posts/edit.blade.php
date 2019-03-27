@@ -19,6 +19,15 @@
                         <input type="text" class="form-control" value="{{$post->slug}}" name="slug" id="PostSlug" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
+                        <label for="category_id">Category</label>
+                        <select name="category_id" class="form-control" id="category_id" required>
+                            <option hidden value="{{$post->category->id}}">{{$post->category->name}}</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}" name="category_id">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="PostBody">Body</label>
                         <textarea type="text" class="form-control" name="body" id="PostBody" rows="5">{{$post->body}}</textarea>
                     </div>
