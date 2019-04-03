@@ -24,6 +24,12 @@
                     <li class="nav-item {{ Request::is('posts') ? "active" : "" }}">
                             <a class="nav-link" href="{{route('posts.index')}}">Posts</a>
                     </li>
+                    <li class="nav-item {{ Request::is('tags') ? "active" : "" }}">
+                        <a class="nav-link" href="{{route('tags.index')}}">Tags</a>
+                    </li>
+                    <li class="nav-item {{ Request::is('categories') ? "active" : "" }}">
+                        <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
+                    </li>
                 @endguest
         </ul>
         @guest
@@ -49,6 +55,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('tags.index')}}">Tags</a>
                         </li>
                         <li>
                             <a class="nav-link"  href="{{ route('logout') }}"
