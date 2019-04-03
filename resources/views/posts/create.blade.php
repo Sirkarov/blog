@@ -2,6 +2,10 @@
 
 @section('title','| Create New Post')
 
+@section('stylesheets')
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 
         <div class="row">
@@ -27,6 +31,17 @@
                                 @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+                        <select name="tags[]" class="form-control select2-multi" id="tags" required multiple="multiple">
+                            <option hidden value="">Choose Tags</option>
+                            @foreach($tags as $tag)
+                                <option value="{{$tag->id}}" name="tag_id">{{$tag->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="body">Body</label>
                         <textarea type="text" class="form-control" name="body" id="PostBody" placeholder="Enter body for the Post" rows="5"></textarea>
@@ -36,4 +51,13 @@
             </div>
         </div>
 
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/select2.min.js')}}"></script>
+    <script type="text/javascript">
+        $('.select2-multi').select2({
+            placeholder: "Select Tags"
+        });
+    </script>
 @endsection
