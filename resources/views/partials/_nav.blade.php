@@ -24,6 +24,12 @@
                     <li class="nav-item {{ Request::is('posts') ? "active" : "" }}">
                             <a class="nav-link" href="{{route('posts.index')}}">Posts</a>
                     </li>
+                    <li class="nav-item {{ Request::is('tags') ? "active" : "" }}">
+                        <a class="nav-link" href="{{route('tags.index')}}">Tags</a>
+                    </li>
+                    <li class="nav-item {{ Request::is('categories') ? "active" : "" }}">
+                        <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
+                    </li>
                 @endguest
         </ul>
         @guest
@@ -44,6 +50,15 @@
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('posts.index')}}">Posts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('tags.index')}}">Tags</a>
+                        </li>
                         <li>
                             <a class="nav-link"  href="{{ route('logout') }}"
                                onclick="event.preventDefault();

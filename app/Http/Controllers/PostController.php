@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Post;
@@ -24,7 +26,10 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('posts.create')->with('categories',$categories)->with('tags',$tags);
     }
 
     public function store(Request $request)
@@ -32,6 +37,7 @@ class PostController extends Controller
         $validator = Validator::make($request->all(),array(
             'title' => 'required|max:255',
             'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+            'category_id' => 'required|integer',
             'body'  => 'required'
         ));
 
@@ -44,10 +50,13 @@ class PostController extends Controller
         $post = new Post;
 
         $post->title = $request->title;
-        $post->body = $request->body;
         $post->slug = $request->slug;
+        $post->category_id = $request->category_id;
+        $post->body = $request->body;
 
         $post->save();
+
+        $post->tags()->sync($request->tags,false);
 
         Session::flash('success','Post was created successfully');
 
@@ -65,7 +74,12 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        return view('posts.edit')->with('post',$post);
+        $categories = Category::all();
+
+        $tags = Tag::all();
+
+
+        return view('posts.edit')->with('post',$post)->with('categories',$categories)->with('tags',$tags);
     }
 
     public function update(Request $request, $id)
@@ -76,6 +90,7 @@ class PostController extends Controller
         {
             $validator = Validator::make($request->all(),array(
                 'title' => 'required|max:255',
+                'category_id' => 'required|integer',
                 'body'  => 'required'
             ));
         }
@@ -84,6 +99,7 @@ class PostController extends Controller
             $validator = Validator::make($request->all(),array(
                 'title' => 'required|max:255',
                 'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+                'category_id' => 'required|integer',
                 'body'  => 'required'
             ));
         }
@@ -95,10 +111,13 @@ class PostController extends Controller
         }
 
         $post->title = $request->title;
-        $post->body = $request->body;
         $post->slug = $request->slug;
+        $post->category_id = $request->category_id;
+        $post->body = $request->body;
 
         $post->save();
+
+        $post->tags()->sync($request->tags);
 
         Session::flash('success','The Post was updated Succesfully');
 
@@ -109,7 +128,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-
+        $post->tags()->detach();
         $post->delete();
 
         Session::flash('success','The Post was successfully deleted');
