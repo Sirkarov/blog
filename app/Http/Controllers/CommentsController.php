@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Post;
 use Illuminate\Http\Request;
+use Auth;
+use Validator;
+use Session;
 
 class CommentsController extends Controller
 {
@@ -41,8 +45,33 @@ class CommentsController extends Controller
      */
     public function store(Request $request,$id)
     {
-        $post = Post::findOrFail($id);
-        dd(\Auth::user()->name);
+        $post = Post::findOrfail($id);
+
+        $validator = Validator::make($request->all(),array(
+            'comment' => 'required|min:5|max:255',
+        ));
+
+        if ($validator->fails()) {
+            return redirect()->route('blog.single',$post->slug)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $comment = new Comment;
+
+        $comment->name = Auth::user()->name;
+        $comment->email = Auth::user()->email;
+        $comment->comment = $request->comment;
+        $comment->approved = true;
+
+        $comment->post()->associate($post);
+
+        $comment->save();
+
+        Session::flash('success','Comment was created successfully');
+
+        return redirect()->route('blog.single',$post->slug);
+
     }
 
     /**
