@@ -48,5 +48,44 @@
     		</div>
     	</div>
     </div>
+	<div class="row" style="margin-top:15px">
+		<div class="col-md-8">
+			@if($post->comments->count()==0)
+				<h3>{{$post->comments->count()}} Comments </h3>
+				@else
+			@if($post->comments->count()>1)
+				<h3>{{$post->comments->count()}} Comments </h3>
+				@else
+				<h3>{{$post->comments->count()}} Comment </h3>
+				@endif
+			<table class="table">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Comment</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				@foreach($post->comments as $comment)
+					<tr>
+						<td>{{$comment->name}}</td>
+						<td>{{$comment->email}}</td>
+						<td>{{$comment->comment}}</td>
+						<td>
+							<a href="{{route('comments.edit',$comment->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+							<form role="form" action={{route('comments.destroy',$comment->id)}} method="POST">
+								@csrf
+								<button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+							</form>
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+				@endif
+		</div>
+	</div>
 
 @endsection
