@@ -93,7 +93,8 @@ class CommentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::findOrfail($id);
+        return view('comments.edit')->with('comment',$comment);
     }
 
     /**
@@ -105,7 +106,25 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),array(
+            'comment' => 'required|min:10|max:255'
+        ));
+
+        if ($validator->fails()) {
+            return redirect()->route('posts.show',$comment->post->id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $comment = Comment::findOrFail($id);
+
+        $comment->comment = $request->comment;
+
+        $comment->save();
+
+        Session::flash('success','The comment was succesfully updated');
+
+        return redirect()->route('posts.show',$comment->post->id);
     }
 
     /**
@@ -116,6 +135,12 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::findOrfail($id);
+
+        $comment->delete();
+
+        Session::flash('success','The comment was successfully deleted');
+
+        return redirect()->route('posts.show',$comment->post->id);
     }
 }
