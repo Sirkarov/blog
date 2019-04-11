@@ -9,11 +9,21 @@
 
 @section('content')
 
-    <form role="form" method="POST" action="{{route('posts.update',$post->id)}}">
+    <form role="form" method="POST" action="{{route('posts.update',$post->id)}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="_method" value="put" />
         <div class="row">
                 <div class="col-md-8">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <img alt="image" src="{{asset('images/'.$post->image)}}" height="200" width="300">
+                                <label for="image"></label>
+                                <input type="file" id="image" class="form-control" name="image">
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="PostTitle">Title</label>

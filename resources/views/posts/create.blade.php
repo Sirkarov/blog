@@ -12,7 +12,7 @@
             <div class="col-md-8 offset-2">
                 <h1>Create New Post</h1>
                 <hr>
-                <form method="POST" action="{{route('posts.store')}}">
+                <form method="POST" action="{{route('posts.store')}}" enctype="multipart/form-data">
                    @csrf
                     <div class="form-group">
                         <label for="title">Title</label>
@@ -40,6 +40,11 @@
                                 <option value="{{$tag->id}}" name="tag_id">{{$tag->name}}</option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Upload an Image</label>
+                        <input type="file" id="image" name="image" class="form-control block">
                     </div>
 
                     <div class="form-group">
