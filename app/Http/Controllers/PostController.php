@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Post;
+use Intervention\Image\Facades\Image;
 use Session;
 
 class PostController extends Controller
@@ -32,13 +34,17 @@ class PostController extends Controller
         return view('posts.create')->with('categories',$categories)->with('tags',$tags);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),array(
             'title' => 'required|max:255',
             'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'category_id' => 'required|integer',
-            'body'  => 'required'
+            'body'  => 'required',
         ));
 
         if ($validator->fails()) {
@@ -53,6 +59,16 @@ class PostController extends Controller
         $post->slug = $request->slug;
         $post->category_id = $request->category_id;
         $post->body = $request->body;
+
+        if($request->hasFile('image'))
+        {
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            $location = public_path('images/'.$filename);
+            Image::make($image)->resize(300,200)->save($location);
+
+            $post->image = $filename;
+        }
 
         $post->save();
 
@@ -115,6 +131,22 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
         $post->body = $request->body;
 
+
+        if($request->hasFile('image'))
+        {
+            $image = $request->file('image');
+            $filename = time().'.'. $image->getClientOriginalExtension();
+            $location = public_path('images/'.$filename);
+            Image::make($image)->resize(300,200)->save($location);
+
+            $oldFilename = $post->image;
+
+            $post->image = $filename;
+
+            Storage::delete($oldFilename);
+        }
+
+
         $post->save();
 
         $post->tags()->sync($request->tags);
@@ -129,6 +161,9 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         $post->tags()->detach();
+
+        Storage::delete($post->image);
+
         $post->delete();
 
         Session::flash('success','The Post was successfully deleted');

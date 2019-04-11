@@ -5,6 +5,11 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 offset-2">
+            <img alt="image" src="{{asset('images/'. $post->image)}}" height="200" width="400">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 offset-2">
             <h1>{{$post->title}}</h1>
             <p>{{$post->body}}</p>
             <hr>
@@ -12,7 +17,6 @@
             <hr>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-8 offset-2">
             @if($post->comments()->count()>1)
